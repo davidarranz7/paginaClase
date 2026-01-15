@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados.es | Marcadores</title>
-    <link rel="stylesheet" href="/estilos/trabajo.css">
+    <title>Resultados.es | Clasificación</title>
+    <link rel="stylesheet" href="/estilos/clasificacion.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -13,11 +13,16 @@
         <div class="nav-container">
             <div class="brand-group">
                 <a href="/" class="btn-back">
-                    <span>←</span> Volver
+                    <span>←</span> Menú
                 </a>
                 <h1 class="brand" onclick="window.location.href='/'" style="cursor:pointer">
                     Resultados<span>.es</span>
                 </h1>
+            </div>
+
+            <div class="nav-menu">
+                <a href="/resultados">Resultados</a>
+                <a href="/clasificacion" class="active">Clasificación</a>
             </div>
 
             <div class="clock-box" id="liveClock">00:00:00</div>
@@ -26,7 +31,7 @@
 
     <main class="content">
         <header class="hero">
-            <h2 class="hero-title">Marcadores <span class="text-gradient">En Vivo</span></h2>
+            <h2 class="hero-title">Tabla de <span class="text-gradient">Posiciones</span></h2>
 
             <div class="control-panel">
                 <div class="select-box">
@@ -37,7 +42,6 @@
                             <option value="SA">Serie A</option>
                             <option value="BL1">Bundesliga</option>
                             <option value="FL1">Ligue 1</option>
-                            <option value="CL">Champions League</option>
                         </optgroup>
                         <optgroup label="Otras Ligas">
                             <option value="DED">Eredivisie</option>
@@ -46,20 +50,40 @@
                         </optgroup>
                     </select>
                 </div>
-                <button onclick="searchLeagues()" class="btn-main">CONSULTAR</button>
+                <button onclick="loadStandings()" class="btn-main">VER TABLA</button>
             </div>
         </header>
 
         <div id="loader" class="hidden"><div class="spinner"></div></div>
 
-        <div id="leaguesGrid" class="results-container"></div>
+        <div class="table-wrapper">
+            <table id="standingsTable" class="hidden">
+                <thead>
+                    <tr>
+                        <th>Pos</th>
+                        <th>Equipo</th>
+                        <th>PJ</th>
+                        <th>G</th>
+                        <th>E</th>
+                        <th>P</th>
+                        <th>GF</th>
+                        <th>GC</th>
+                        <th>DG</th>
+                        <th>PTS</th>
+                    </tr>
+                </thead>
+                <tbody id="standingsBody">
+                    </tbody>
+            </table>
+        </div>
     </main>
 
     <footer class="footer">
         <p>Resultados.es &copy; 2026 | Centro de Datos Pro</p>
     </footer>
 
-    <script src="/script/trabajo.js"></script>
+    <script src="/script/clasificacion.js"></script>
+
     <script>
         function updateClock() {
             const clock = document.getElementById('liveClock');
