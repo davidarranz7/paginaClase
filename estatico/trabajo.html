@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FootyDash | Elite Live Scores</title>
+    <link rel="stylesheet" href="/estilos/trabajo.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="brand">FOOTY<span>DASH</span></h1>
+            <div class="status-indicator">
+                <span class="dot"></span>
+                <span>SISTEMA ACTIVO</span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h2 class="hero-title">Marcadores <span class="text-gradient">Globales</span></h2>
+            <p class="hero-subtitle">Panel de monitorización deportiva de alta precisión.</p>
+
+            <div class="control-panel">
+                <select id="ligaSelect" class="custom-select">
+                    <optgroup label="Top Europa">
+                        <option value="PD">LaLiga EA Sports</option>
+                        <option value="PL">Premier League</option>
+                        <option value="SA">Serie A</option>
+                        <option value="BL1">Bundesliga</option>
+                        <option value="FL1">Ligue 1</option>
+                        <option value="CL">Champions League</option>
+                    </optgroup>
+                    <optgroup label="Otras Ligas">
+                        <option value="DED">Eredivisie</option>
+                        <option value="PPL">Primeira Liga</option>
+                        <option value="BSA">Serie A Brasil</option>
+                    </optgroup>
+                </select>
+                <button onclick="searchLeagues()" class="btn-main">Consultar</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="content">
+        <div id="loader" class="hidden">
+            <div class="spinner"></div>
+            <p class="loader-text">Sincronizando con satélite...</p>
+        </div>
+        <div id="leaguesGrid" class="results-grid">
+            </div>
+    </main>
+
+    <footer class="footer">
+        <p>FootyDash &copy; 2026 | Desarrollado con tecnología de alto rendimiento</p>
+    </footer>
+
+    <script src="/script/trabajo.js"></script>
+</body>
+</html>
