@@ -1,73 +1,81 @@
-const API_URL = "http://127.0.0.1:8000/api/resultados";
+/**
+ * Lógica para Resultados - Resultados.es
+ */
+
+const API_URL = "/api/resultados";
 
 async function searchLeagues() {
-    // 1. Obtener la liga seleccionada y preparar la interfaz
-    const ligaSeleccionada = document.getElementById('ligaSelect').value;
-    const grid = document.getElementById('leaguesGrid');
+    const liga = document.getElementById('ligaSelect').value;
     const loader = document.getElementById('loader');
+    const container = document.getElementById('leaguesGrid');
 
-    // Mostrar el cargador y limpiar resultados anteriores
+    // 1. Limpiar resultados anteriores y mostrar el spinner
+    container.innerHTML = "";
     loader.classList.remove('hidden');
-    grid.innerHTML = "";
 
     try {
-        // 2. Llamada a tu servidor FastAPI pasando la liga elegida
-        const response = await fetch(`${API_URL}?liga=${ligaSeleccionada}`);
+        // Llamada a nuestro servidor FastAPI
+        const response = await fetch(`${API_URL}?liga=${liga}`);
         const data = await response.json();
 
         loader.classList.add('hidden');
 
-        // Manejo de errores de la API (por si la liga no está disponible)
+        // Manejo de errores de la API o liga vacía
         if (data.error) {
-            grid.innerHTML = `<p class="error-msg">${data.error}</p>`;
+            container.innerHTML = `<p style="text-align:center; color:#ef4444;">Error: ${data.details?.message || "Límite de peticiones alcanzado"}</p>`;
             return;
         }
 
         if (!data.matches || data.matches.length === 0) {
-            grid.innerHTML = "<p class='placeholder-text'>No hay resultados recientes para esta competición.</p>";
+            container.innerHTML = `<p style="text-align:center; color:var(--text-dim);">No hay resultados terminados disponibles para esta liga.</p>`;
             return;
         }
 
-        // 3. Procesar datos: Tomar los últimos 10 y darlos la vuelta (más recientes arriba)
-        const ultimosDiez = data.matches.slice(-10).reverse();
+        // 2. ORDENAR: Invertimos la lista para mostrar los más RECIENTES arriba
+        // Y limitamos a los últimos 30 para no saturar la página
+        const partidosRecientes = data.matches.reverse().slice(0, 30);
 
-        ultimosDiez.forEach(match => {
-            const card = document.createElement('div');
-            card.className = "match-card";
+        // 3. Renderizar cada partido
+        partidosRecientes.forEach(match => {
+            const matchCard = document.createElement('div');
+            matchCard.className = 'match-card';
 
-            // Si el marcador es null (no ha terminado), ponemos un guión
-            const homeScore = match.score.fullTime.home !== null ? match.score.fullTime.home : "-";
-            const awayScore = match.score.fullTime.away !== null ? match.score.fullTime.away : "-";
+            // Formatear fecha y hora local
+            const dateObj = new Date(match.utcDate);
+            const matchDate = dateObj.toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: 'short'
+            });
+            const matchTime = dateObj.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
 
-            card.innerHTML = `
-                <div class="match-info">
-                    ${match.competition.name} - JORNADA ${match.matchday}
+            matchCard.innerHTML = `
+                <div class="match-meta">${matchDate} | ${matchTime} - FINALIZADO</div>
+
+                <div class="team home">
+                    <img src="${match.homeTeam.crest}" class="crest" onerror="this.src='https://via.placeholder.com/40'">
+                    <span class="team-name">${match.homeTeam.shortName || match.homeTeam.name}</span>
                 </div>
-                <div class="scoreboard">
-                    <div class="team">
-                        <img src="${match.homeTeam.crest}" class="crest" alt="${match.homeTeam.name}">
-                        <span>${match.homeTeam.shortName || match.homeTeam.name}</span>
-                    </div>
 
+                <div class="score-container">
                     <div class="score-box">
-                        ${homeScore} - ${awayScore}
-                    </div>
-
-                    <div class="team">
-                        <img src="${match.awayTeam.crest}" class="crest" alt="${match.awayTeam.name}">
-                        <span>${match.awayTeam.shortName || match.awayTeam.name}</span>
+                        ${match.score.fullTime.home} : ${match.score.fullTime.away}
                     </div>
                 </div>
-                <div class="match-date">
-                    ${new Date(match.utcDate).toLocaleDateString()}
+
+                <div class="team away">
+                    <img src="${match.awayTeam.crest}" class="crest" onerror="this.src='https://via.placeholder.com/40'">
+                    <span class="team-name">${match.awayTeam.shortName || match.awayTeam.name}</span>
                 </div>
             `;
-            grid.appendChild(card);
+            container.appendChild(matchCard);
         });
 
     } catch (error) {
+        console.error("Error al obtener resultados:", error);
         loader.classList.add('hidden');
-        grid.innerHTML = "<p class='error-msg'>Error crítico: Asegúrate de que el servidor FastAPI esté encendido.</p>";
-        console.error("Error en la petición:", error);
+        container.innerHTML = `<p style="text-align:center; color:#ef4444;">Error de conexión con el servidor.</p>`;
     }
 }

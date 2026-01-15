@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados.es | Inicio</title>
+    <link rel="stylesheet" href="/estilos/menu.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="bg-gradient"></div>
+
+    <main class="menu-container">
+        <header class="menu-header">
+            <h1 class="brand">Resultados<span>.es</span></h1>
+            <p class="subtitle">Centro de Análisis Deportivo Pro</p>
+        </header>
+
+        <nav class="menu-grid">
+            <div class="menu-card" onclick="goToResultados()">
+                <div class="card-icon">⚽</div>
+                <div class="card-content">
+                    <h2>RESULTADOS</h2>
+                    <p>Marcadores en vivo y partidos finalizados de las mejores ligas del mundo.</p>
+                    <div class="card-footer">Acceder →</div>
+                </div>
+            </div>
+
+            <div class="menu-card" onclick="goToClasificacion()">
+                <div class="card-icon">📊</div>
+                <div class="card-content">
+                    <h2>CLASIFICACIÓN</h2>
+                    <p>Tablas de posiciones actualizadas, estadísticas de puntos y rendimiento.</p>
+                    <div class="card-footer">Explorar →</div>
+                </div>
+            </div>
+        </nav>
+    </main>
+
+    <footer class="footer-simple">
+        <span id="liveClock">00:00:00</span> | © 2026 Resultados.es Premium
+    </footer>
+
+    <script src="/script/menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+/* --- VARIABLES --- */
+:root {
+    --bg-dark: #020617;
+    --bg-card: #0f172a;
+    --accent: #10b981;
+    --accent-glow: rgba(16, 185, 129, 0.3);
+    --text-white: #f8fafc;
+    --text-dim: #94a3b8;
+    --border: rgba(255, 255, 255, 0.08);
+}
+
+/* --- BASE --- */
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Fondo con sutiles luces de ambiente */
+.bg-gradient {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
+    z-index: -1;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.menu-container {
+    width: 100%;
+    max-width: 1000px;
+    padding: 2rem;
+    text-align: center;
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.menu-header { margin-bottom: 4rem; }
+
+.brand {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -3px;
+    text-transform: uppercase;
+}
+
+.brand span {
+    color: var(--accent);
+    text-shadow: 0 0 20px var(--accent-glow);
+}
+
+.subtitle {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+/* --- GRID DE OPCIONES --- */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 2rem;
+}
+
+.menu-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+/* Efecto hover en las tarjetas */
+.menu-card:hover {
+    transform: translateY(-15px);
+    border-color: var(--accent);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px var(--accent-glow);
+    background: rgba(30, 41, 59, 0.5);
+}
+
+.card-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.2));
+}
+
+.card-content h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0 0 1rem 0;
+    letter-spacing: -1px;
+}
+
+.card-content p {
+    color: var(--text-dim);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+/* --- BOTÓN ACCIÓN DENTRO DE CARD --- */
+.card-footer {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    background: rgba(16, 185, 129, 0.05);
+}
+
+.menu-card:hover .card-footer {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 0 15px var(--accent);
+    border-color: var(--accent);
+}
+
+/* --- FOOTER --- */
+.footer-simple {
+    margin-top: 5rem;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+#liveClock {
+    color: var(--accent);
+    font-weight: bold;
+    margin-right: 10px;
+}
